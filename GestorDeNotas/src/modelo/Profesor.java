@@ -1,6 +1,6 @@
 package modelo;
 
-import datos.ProfesorDAO;
+import datosDAO.ProfesorDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
