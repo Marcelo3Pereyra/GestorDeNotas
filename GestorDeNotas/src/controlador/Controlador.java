@@ -1,14 +1,38 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
-/**
- *
- * @author m3p
- */
-public class Controlador {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import vista.InterfazPrincipal;
+
+public class Controlador implements ActionListener {
+    
+    InterfazPrincipal interPpal = new InterfazPrincipal();
+    
+    public Controlador() {
+        this.interPpal.setVisible(true);
+        this.interPpal.getBtnAlumno().addActionListener(this);
+        this.interPpal.getBtnCargarNota().addActionListener(this);
+        this.interPpal.getBtnProfesor().addActionListener(this);
+        this.interPpal.getBtnMateria().addActionListener(this);
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        
+        if (ae.getSource().equals(this.interPpal.getBtnAlumno())) {
+            ControladorAlu ctrlAlu = new ControladorAlu();
+            this.interPpal.setVisible(false);
+        } else if (ae.getSource().equals(interPpal.getBtnMateria())) {
+            ControladorMat ctrlMat = new ControladorMat();
+            interPpal.setVisible(false);
+        } else if (ae.getSource().equals(interPpal.getBtnProfesor())) {
+            ControladorProf ctrlProf = new ControladorProf();
+            interPpal.setVisible(false);
+        } else {
+            ControladorNota ctrlNot = new ControladorNota();
+            interPpal.setVisible(false);
+        }
+        
+    }
     
 }
