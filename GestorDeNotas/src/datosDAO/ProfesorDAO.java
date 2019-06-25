@@ -1,6 +1,5 @@
 package datosDAO;
 
-import datosDAO.SQLQuery;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -8,16 +7,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Profesor;
-
-/**
- *
- * @author m3per
- */
 public class ProfesorDAO extends SQLQuery {
-
     public Profesor prof1;
-
     public ProfesorDAO() {
+        
         try {
             this.conectar("localhost", "proyectoMetodologia", "root", "root");
         } catch (ClassNotFoundException | SQLException ex) {
@@ -25,9 +18,7 @@ public class ProfesorDAO extends SQLQuery {
             JOptionPane.showMessageDialog(null, "Error de conexion.");
         }
     }
-
     public Boolean agregarProfesorDao(Profesor prof) throws SQLException {
-
         String insertTableSQL = "INSERT INTO Profesor"
                 + "(dni_prof,nom_prof,ape_prof,domic_prof,tel_prof) VALUES"
                 + "(?,?,?,?,?)";
@@ -39,14 +30,11 @@ public class ProfesorDAO extends SQLQuery {
         consulta.setString(5, prof.getTel_prof());
 
         if (consulta.executeUpdate() > 0) {
-
             return true;
         } else {
-
             return false;
         }
     }
-
     public ArrayList<Profesor> getListadoProfesores() {
         ArrayList<Profesor> ListadoProfesores = new ArrayList<Profesor>();
         String sql = "SELECT * FROM Profesor";
@@ -54,9 +42,7 @@ public class ProfesorDAO extends SQLQuery {
         try {
             this.consulta = this.conexion.prepareStatement(sql);
             consulta.execute();
-
             datos = consulta.executeQuery();
-
             while (this.datos.next()) {
                 prof1 = new Profesor();
                 prof1.setDni_prof(this.datos.getLong("dni_prof"));
@@ -71,32 +57,25 @@ public class ProfesorDAO extends SQLQuery {
         }
         return ListadoProfesores;
     }
-
     public boolean eliminarProfesor(Profesor prof) {
         PreparedStatement elimProfesor = null;
-
         String elimProf = "DELETE FROM Profesor WHERE dni_prof = " + prof.getDni_prof();
-
+        
         try {
             elimProfesor = conexion.prepareStatement(elimProf);
-
             if (elimProfesor.executeUpdate() > 0) {
                 return true;
             } else {
                 return false;
             }
-
         } catch (SQLException e1) {
             return false;
         }
-
     }
-
     public Profesor modificarProfesorDAO(Profesor prof) {
         int modificado = 0;
 
         if (prof.getNom_prof().length() > 0) {
-
             try {
                 this.conectar("localhost", "proyectoMetodologia", "root", "root");
                 this.consulta = this.conexion.prepareStatement("UPDATE Profesor SET nom_prof=? WHERE dni_prof=?");
@@ -112,6 +91,7 @@ public class ProfesorDAO extends SQLQuery {
                 Logger.getLogger(Profesor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
         if (prof.getApe_prof().length() > 0) {
             try {
                 this.conectar("localhost", "proyectoMetodologia", "root", "root");
@@ -128,6 +108,7 @@ public class ProfesorDAO extends SQLQuery {
                 Logger.getLogger(Profesor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
         if (prof.getDomic_prof().length() > 0) {
             try {
                 this.conectar("localhost", "proyectoMetodologia", "root", "root");
@@ -143,6 +124,7 @@ public class ProfesorDAO extends SQLQuery {
                 Logger.getLogger(Profesor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
         if (prof.getTel_prof().length() > 0) {
             try {
                 this.conectar("localhost", "proyectoMetodologia", "root", "root");
@@ -166,8 +148,6 @@ public class ProfesorDAO extends SQLQuery {
             JOptionPane.showMessageDialog(null, "No se ha podido realizar la modificacion de los datos.\n"
                     + "Intentelo nuevamente.", "Error en la operación", JOptionPane.ERROR_MESSAGE);
         }
-
         return prof;
     }
-
 }

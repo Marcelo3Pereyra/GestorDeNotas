@@ -1,6 +1,5 @@
 package datosDAO;
 
-import datosDAO.SQLQuery;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,14 +11,15 @@ import modelo.Alumno;
 public class AlumnoDAO extends SQLQuery {
 
     public Alumno alum1;
-
     public AlumnoDAO() {
+        
         try {
             this.conectar("localhost", "proyectoMetodologia", "root", "root");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error de conexion.");
         }
+        
     }
 
     public Boolean agregarAlumnoDao(Alumno alu) throws SQLException {
@@ -38,22 +38,20 @@ public class AlumnoDAO extends SQLQuery {
         } else {
             return false;
         }
+        
     }
 
     public boolean eliminarAlumnos(Alumno alu) {
         PreparedStatement elimAlumno = null;
         PreparedStatement elimAlumnoNota = null;
-
         String elimAluNot = "DELETE FROM Nota WHERE dni_alu_not = " + alu.getDni_alu();
         String elimAlu = "DELETE FROM Alumno WHERE dni_alu = " + alu.getDni_alu();
 
         try {
             elimAlumnoNota = conexion.prepareStatement(elimAluNot);
-
             elimAlumnoNota.executeUpdate();
-
             elimAlumno = conexion.prepareStatement(elimAlu);
-
+            
             if (elimAlumno.executeUpdate() > 0) {
                 return true;
             } else {
@@ -63,20 +61,19 @@ public class AlumnoDAO extends SQLQuery {
         } catch (SQLException e1) {
             return false;
         }
-
     }
 
     public Alumno modificarAlumno(Alumno alumno) {
         int modificado = 0;
-
+        
         if (alumno.getNom_alu().length() > 0) {
-
             try {
                 this.conectar("localhost", "proyectoMetodologia", "root", "root");
                 this.consulta = this.conexion.prepareStatement("UPDATE Alumno SET nom_alu=? WHERE dni_alu=?");
                 consulta.setString(1, alumno.getNom_alu());
                 consulta.setLong(2, alumno.getDni_alu());
                 consulta.executeUpdate();
+            
                 if (consulta.executeUpdate() > 0) {
                     modificado++;
                 } else {
@@ -86,6 +83,7 @@ public class AlumnoDAO extends SQLQuery {
                 Logger.getLogger(Alumno.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
         if (alumno.getApe_alu().length() > 0) {
             try {
                 this.conectar("localhost", "proyectoMetodologia", "root", "root");
@@ -103,6 +101,7 @@ public class AlumnoDAO extends SQLQuery {
             }
 
         }
+        
         if (alumno.getDomic_alu().length() > 0) {
             try {
                 this.conectar("localhost", "proyectoMetodologia", "root", "root");
@@ -119,6 +118,7 @@ public class AlumnoDAO extends SQLQuery {
                 Logger.getLogger(Alumno.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
         if (alumno.getTel_alu().length() > 0) {
             try {
                 this.conectar("localhost", "proyectoMetodologia", "root", "root");
@@ -142,7 +142,6 @@ public class AlumnoDAO extends SQLQuery {
             JOptionPane.showMessageDialog(null, "No se ha podido realizar la modificacion de los datos.\n"
                     + "Intentelo nuevamente.", "Error en la operación", JOptionPane.ERROR_MESSAGE);
         }
-
         return alumno;
     }
 
@@ -153,9 +152,7 @@ public class AlumnoDAO extends SQLQuery {
         try {
             this.consulta = this.conexion.prepareStatement(sql);
             consulta.execute();
-
             datos = consulta.executeQuery();
-
             while (this.datos.next()) {
                 alum1 = new Alumno();
                 alum1.setDni_alu(this.datos.getLong("dni_alu"));
@@ -168,6 +165,7 @@ public class AlumnoDAO extends SQLQuery {
         } catch (SQLException ex) {
             Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return listadoAlumnos;
     }
 }

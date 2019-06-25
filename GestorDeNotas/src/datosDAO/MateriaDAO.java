@@ -1,6 +1,5 @@
 package datosDAO;
 
-import datosDAO.SQLQuery;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -9,10 +8,9 @@ import javax.swing.JOptionPane;
 import modelo.Materia;
 
 public class MateriaDAO extends SQLQuery {
-
     public Materia mat;
-
     public MateriaDAO() {
+        
         try {
             this.conectar("localhost", "proyectoMetodologia", "root", "root");
         } catch (ClassNotFoundException | SQLException ex) {
@@ -20,7 +18,6 @@ public class MateriaDAO extends SQLQuery {
             JOptionPane.showMessageDialog(null, "Error de conexion.");
         }
     }
-
     public Boolean agregarMateriaDAO(Materia mat) throws SQLException {
         ArrayList<Long> dniProfesores = new ArrayList<>();
         String sql = "SELECT dni_prof FROM Profesor";
@@ -28,9 +25,7 @@ public class MateriaDAO extends SQLQuery {
         try {
             this.consulta = this.conexion.prepareStatement(sql);
             consulta.execute();
-
             datos = consulta.executeQuery();
-
             while (this.datos.next()) {
                 long dni;
                 dni = (this.datos.getLong("dni_prof"));
@@ -39,8 +34,8 @@ public class MateriaDAO extends SQLQuery {
         } catch (SQLException ex) {
             Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         int cont = 0;
-
         String insertTableSQL = "SET FOREIGN_KEY_CHECKS =0";
         consulta = this.conexion.prepareStatement(insertTableSQL);
         consulta.executeUpdate();
@@ -52,51 +47,47 @@ public class MateriaDAO extends SQLQuery {
         consulta.setString(2, mat.getDescr_mat());
         consulta.setInt(3, mat.getCant_hor_mat());
         consulta.setLong(4, mat.getDni_prof_mat());
+        
         for (int i = 0; i < dniProfesores.size(); i++) {
             if (dniProfesores.get(i) == mat.getDni_prof_mat()) {
                 cont++;
             }
         }
+        
         if (cont > 0) {
             if (consulta.executeUpdate() > 0) {
                 insertTableSQL = "SET FOREIGN_KEY_CHECKS =1";
                 consulta = this.conexion.prepareStatement(insertTableSQL);
                 consulta.executeUpdate();
                 return true;
-
             } else {
 
                 return false;
             }
+            
         } else {
             JOptionPane.showMessageDialog(null, "No se encontro un profesor que coincida con ese documento.");
             JOptionPane.showMessageDialog(null, "Agrege ese profesor, y reintente.");
             return false;
         }
     }
-
     public boolean eliminarMateriaDAO(Materia mat) {
-
         String elimMateria = "DELETE FROM Materia WHERE cod_mat = " + mat.getCod_mat();
-
+        
         try {
             consulta = conexion.prepareStatement(elimMateria);
-
             if (consulta.executeUpdate() > 0) {
                 return true;
             } else {
                 return false;
             }
-
         } catch (SQLException e1) {
             return false;
         }
-
     }
-
     public Materia modificarMateriaDAO(Materia mat) {
         int modificado = 0;
-
+        
         if (mat.getDescr_mat().length() > 0) {
 
             try {
@@ -114,6 +105,7 @@ public class MateriaDAO extends SQLQuery {
                 Logger.getLogger(Materia.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
         if (mat.getDescr_mat().length() > 0) {
             try {
                 this.conectar("localhost", "proyectoMetodologia", "root", "root");
@@ -129,8 +121,8 @@ public class MateriaDAO extends SQLQuery {
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(Materia.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
+        
         if (mat.getCant_hor_mat() > 0) {
             try {
                 this.conectar("localhost", "proyectoMetodologia", "root", "root");
@@ -147,6 +139,7 @@ public class MateriaDAO extends SQLQuery {
                 Logger.getLogger(Materia.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
         if (mat.getDni_prof_mat() > 0) {
             try {
                 this.conectar("localhost", "proyectoMetodologia", "root", "root");
@@ -170,10 +163,8 @@ public class MateriaDAO extends SQLQuery {
             JOptionPane.showMessageDialog(null, "No se ha podido realizar la modificacion de los datos.\n"
                     + "Intentelo nuevamente.", "Error en la operación", JOptionPane.ERROR_MESSAGE);
         }
-
         return mat;
     }
-
     public ArrayList<Materia> getListadoMateriasDAO() {
         ArrayList<Materia> listadoMaterias = new ArrayList<>();
         String sql = "SELECT * FROM Materia";
@@ -181,9 +172,7 @@ public class MateriaDAO extends SQLQuery {
         try {
             this.consulta = this.conexion.prepareStatement(sql);
             consulta.execute();
-
             datos = consulta.executeQuery();
-
             while (this.datos.next()) {
                 mat = new Materia();
                 mat.setCod_mat(this.datos.getInt("cod_mat"));
