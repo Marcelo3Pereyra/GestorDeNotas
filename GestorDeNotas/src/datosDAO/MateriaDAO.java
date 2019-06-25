@@ -12,7 +12,7 @@ public class MateriaDAO extends SQLQuery {
     public MateriaDAO() {
         
         try {
-            this.conectar("localhost", "proyectoMetodologia", "root", "root");
+             conectar("localhost", "proyectoMetodologia", "root", "root");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(MateriaDAO.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error de conexion.");
@@ -23,12 +23,12 @@ public class MateriaDAO extends SQLQuery {
         String sql = "SELECT dni_prof FROM Profesor";
 
         try {
-            this.consulta = this.conexion.prepareStatement(sql);
+             consulta =  conexion.prepareStatement(sql);
             consulta.execute();
             datos = consulta.executeQuery();
-            while (this.datos.next()) {
+            while ( datos.next()) {
                 long dni;
-                dni = (this.datos.getLong("dni_prof"));
+                dni = ( datos.getLong("dni_prof"));
                 dniProfesores.add(dni);
             }
         } catch (SQLException ex) {
@@ -37,12 +37,12 @@ public class MateriaDAO extends SQLQuery {
         
         int cont = 0;
         String insertTableSQL = "SET FOREIGN_KEY_CHECKS =0";
-        consulta = this.conexion.prepareStatement(insertTableSQL);
+        consulta =  conexion.prepareStatement(insertTableSQL);
         consulta.executeUpdate();
         insertTableSQL = "INSERT INTO Materia"
                 + "(cod_mat, descr_mat, cant_hor_mat, dni_prof_mat) VALUES"
                 + "(?,?,?,?)";
-        this.consulta = this.conexion.prepareStatement(insertTableSQL);
+         consulta =  conexion.prepareStatement(insertTableSQL);
         consulta.setInt(1, mat.getCod_mat());
         consulta.setString(2, mat.getDescr_mat());
         consulta.setInt(3, mat.getCant_hor_mat());
@@ -57,7 +57,7 @@ public class MateriaDAO extends SQLQuery {
         if (cont > 0) {
             if (consulta.executeUpdate() > 0) {
                 insertTableSQL = "SET FOREIGN_KEY_CHECKS =1";
-                consulta = this.conexion.prepareStatement(insertTableSQL);
+                consulta =  conexion.prepareStatement(insertTableSQL);
                 consulta.executeUpdate();
                 return true;
             } else {
@@ -91,8 +91,8 @@ public class MateriaDAO extends SQLQuery {
         if (mat.getDescr_mat().length() > 0) {
 
             try {
-                this.conectar("localhost", "proyectoMetodologia", "root", "root");
-                this.consulta = this.conexion.prepareStatement("UPDATE Materia SET descr_mat=? WHERE cod_mat=?");
+                 conectar("localhost", "proyectoMetodologia", "root", "root");
+                 consulta =  conexion.prepareStatement("UPDATE Materia SET descr_mat=? WHERE cod_mat=?");
                 consulta.setString(1, mat.getDescr_mat());
                 consulta.setLong(2, mat.getCod_mat());
                 consulta.executeUpdate();
@@ -108,8 +108,8 @@ public class MateriaDAO extends SQLQuery {
         
         if (mat.getDescr_mat().length() > 0) {
             try {
-                this.conectar("localhost", "proyectoMetodologia", "root", "root");
-                this.consulta = this.conexion.prepareStatement("UPDATE Materia SET descr_mat=? WHERE cod_mat=?");
+                 conectar("localhost", "proyectoMetodologia", "root", "root");
+                 consulta =  conexion.prepareStatement("UPDATE Materia SET descr_mat=? WHERE cod_mat=?");
                 consulta.setString(1, mat.getDescr_mat());
                 consulta.setLong(2, mat.getCod_mat());
                 consulta.execute();
@@ -125,8 +125,8 @@ public class MateriaDAO extends SQLQuery {
         
         if (mat.getCant_hor_mat() > 0) {
             try {
-                this.conectar("localhost", "proyectoMetodologia", "root", "root");
-                this.consulta = this.conexion.prepareStatement("UPDATE Materia SET cant_hor_mat=? WHERE cod_mat=?");
+                 conectar("localhost", "proyectoMetodologia", "root", "root");
+                 consulta =  conexion.prepareStatement("UPDATE Materia SET cant_hor_mat=? WHERE cod_mat=?");
                 consulta.setInt(1, mat.getCant_hor_mat());
                 consulta.setInt(2, mat.getCod_mat());
                 consulta.execute();
@@ -142,8 +142,8 @@ public class MateriaDAO extends SQLQuery {
         
         if (mat.getDni_prof_mat() > 0) {
             try {
-                this.conectar("localhost", "proyectoMetodologia", "root", "root");
-                this.consulta = this.conexion.prepareStatement("UPDATE Materia SET dni_prof_mat=? WHERE cod_mat=?");
+                 conectar("localhost", "proyectoMetodologia", "root", "root");
+                 consulta =  conexion.prepareStatement("UPDATE Materia SET dni_prof_mat=? WHERE cod_mat=?");
                 consulta.setLong(1, mat.getDni_prof_mat());
                 consulta.setLong(2, mat.getCod_mat());
                 consulta.executeUpdate();
@@ -170,15 +170,15 @@ public class MateriaDAO extends SQLQuery {
         String sql = "SELECT * FROM Materia";
 
         try {
-            this.consulta = this.conexion.prepareStatement(sql);
+             consulta =  conexion.prepareStatement(sql);
             consulta.execute();
             datos = consulta.executeQuery();
-            while (this.datos.next()) {
+            while ( datos.next()) {
                 mat = new Materia();
-                mat.setCod_mat(this.datos.getInt("cod_mat"));
-                mat.setDescr_mat(this.datos.getString("descr_mat"));
-                mat.setCant_hor_mat(this.datos.getInt("cant_hor_mat"));
-                mat.setDni_prof_mat(this.datos.getLong("dni_prof_mat"));
+                mat.setCod_mat( datos.getInt("cod_mat"));
+                mat.setDescr_mat( datos.getString("descr_mat"));
+                mat.setCant_hor_mat( datos.getInt("cant_hor_mat"));
+                mat.setDni_prof_mat( datos.getLong("dni_prof_mat"));
                 listadoMaterias.add(mat);
             }
         } catch (SQLException ex) {

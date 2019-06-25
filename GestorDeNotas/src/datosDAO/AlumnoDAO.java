@@ -14,7 +14,7 @@ public class AlumnoDAO extends SQLQuery {
     public AlumnoDAO() {
         
         try {
-            this.conectar("localhost", "proyectoMetodologia", "root", "root");
+             conectar("127.0.0.1", "proyectoMetodologia", "root", "root");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error de conexion.");
@@ -23,24 +23,28 @@ public class AlumnoDAO extends SQLQuery {
     }
 
     public Boolean agregarAlumnoDao(Alumno alu) throws SQLException {
+        if(alu.getDni_alu()<1000000000){
         String insertTableSQL = "INSERT INTO Alumno"
                 + "(dni_alu,nom_alu,ape_alu,domic_alu,tel_alu) VALUES"
                 + "(?,?,?,?,?)";
-        this.consulta = this.conexion.prepareStatement(insertTableSQL);
+        consulta = conexion.prepareStatement(insertTableSQL);
         consulta.setLong(1, alu.getDni_alu());
         consulta.setString(2, alu.getNom_alu());
         consulta.setString(3, alu.getApe_alu());
         consulta.setString(4, alu.getDomic_alu());
         consulta.setString(5, alu.getTel_alu());
-
+        
         if (consulta.executeUpdate() > 0) {
             return true;
         } else {
             return false;
         }
-        
+        } else {
+            
+        JOptionPane.showMessageDialog(null, "El DNI no puede tener mas de nueve digitos, por favor reintente.");
+        return false;
     }
-
+    }
     public boolean eliminarAlumnos(Alumno alu) {
         PreparedStatement elimAlumno = null;
         PreparedStatement elimAlumnoNota = null;
@@ -52,15 +56,12 @@ public class AlumnoDAO extends SQLQuery {
             elimAlumnoNota.executeUpdate();
             elimAlumno = conexion.prepareStatement(elimAlu);
             
-            if (elimAlumno.executeUpdate() > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            elimAlumno.executeUpdate();
 
         } catch (SQLException e1) {
             return false;
         }
+        return true;
     }
 
     public Alumno modificarAlumno(Alumno alumno) {
@@ -68,8 +69,8 @@ public class AlumnoDAO extends SQLQuery {
         
         if (alumno.getNom_alu().length() > 0) {
             try {
-                this.conectar("localhost", "proyectoMetodologia", "root", "root");
-                this.consulta = this.conexion.prepareStatement("UPDATE Alumno SET nom_alu=? WHERE dni_alu=?");
+                conectar("127.0.0.1", "proyectoMetodologia", "root", "root");
+                consulta = conexion.prepareStatement("UPDATE Alumno SET nom_alu=? WHERE dni_alu=?");
                 consulta.setString(1, alumno.getNom_alu());
                 consulta.setLong(2, alumno.getDni_alu());
                 consulta.executeUpdate();
@@ -86,8 +87,8 @@ public class AlumnoDAO extends SQLQuery {
         
         if (alumno.getApe_alu().length() > 0) {
             try {
-                this.conectar("localhost", "proyectoMetodologia", "root", "root");
-                this.consulta = this.conexion.prepareStatement("UPDATE Alumno SET ape_alu=? WHERE dni_alu=?");
+                conectar("127.0.0.1", "proyectoMetodologia", "root", "root");
+                consulta = conexion.prepareStatement("UPDATE Alumno SET ape_alu=? WHERE dni_alu=?");
                 consulta.setString(1, alumno.getApe_alu());
                 consulta.setLong(2, alumno.getDni_alu());
                 consulta.execute();
@@ -104,8 +105,8 @@ public class AlumnoDAO extends SQLQuery {
         
         if (alumno.getDomic_alu().length() > 0) {
             try {
-                this.conectar("localhost", "proyectoMetodologia", "root", "root");
-                this.consulta = this.conexion.prepareStatement("UPDATE Alumno SET domic_alu=? WHERE dni_alu=?");
+                 conectar("127.0.0.1", "proyectoMetodologia", "root", "root");
+                consulta = conexion.prepareStatement("UPDATE Alumno SET domic_alu=? WHERE dni_alu=?");
                 consulta.setString(1, alumno.getDomic_alu());
                 consulta.setLong(2, alumno.getDni_alu());
                 consulta.execute();
@@ -119,10 +120,10 @@ public class AlumnoDAO extends SQLQuery {
             }
         }
         
-        if (alumno.getTel_alu().length() > 0) {
+        if (alumno.getTel_alu().length() >= 0) {
             try {
-                this.conectar("localhost", "proyectoMetodologia", "root", "root");
-                this.consulta = this.conexion.prepareStatement("UPDATE Alumno SET tel_alu=? WHERE dni_alu=?");
+                conectar("127.0.0.1", "proyectoMetodologia", "root", "root");
+                consulta = conexion.prepareStatement("UPDATE Alumno SET tel_alu=? WHERE dni_alu=?");
                 consulta.setString(1, alumno.getTel_alu());
                 consulta.setLong(2, alumno.getDni_alu());
                 consulta.executeUpdate();
@@ -150,16 +151,16 @@ public class AlumnoDAO extends SQLQuery {
         String sql = "SELECT * FROM Alumno";
 
         try {
-            this.consulta = this.conexion.prepareStatement(sql);
+            consulta = conexion.prepareStatement(sql);
             consulta.execute();
             datos = consulta.executeQuery();
-            while (this.datos.next()) {
+            while (datos.next()) {
                 alum1 = new Alumno();
-                alum1.setDni_alu(this.datos.getLong("dni_alu"));
-                alum1.setNom_alu(this.datos.getString("nom_alu"));
-                alum1.setApe_alu(this.datos.getString("ape_alu"));
-                alum1.setDomic_alu(this.datos.getString("domic_alu"));
-                alum1.setTel_alu(this.datos.getString("tel_alu"));
+                alum1.setDni_alu( datos.getLong("dni_alu"));
+                alum1.setNom_alu( datos.getString("nom_alu"));
+                alum1.setApe_alu( datos.getString("ape_alu"));
+                alum1.setDomic_alu( datos.getString("domic_alu"));
+                alum1.setTel_alu( datos.getString("tel_alu"));
                 listadoAlumnos.add(alum1);
             }
         } catch (SQLException ex) {
