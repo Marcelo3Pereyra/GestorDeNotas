@@ -1,0 +1,49 @@
+[33mcommit d728ffbb581c8e73607ebae5dc6f134b18d7f673[m[33m ([m[1;36mHEAD -> [m[1;32mRenzoOldani-master[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: MarceloPereyra <marcelo.pereyra@alumnos.frm.utn.edu.ar>
+Date:   Tue Jun 18 20:35:57 2019 -0300
+
+    error en la ejecucion del merge
+
+[33mcommit c4da40aa72939822aee09eb06a3b64fc5e759b40[m
+Merge: 786c94d 7888116
+Author: MarceloPereyra <marcelo.pereyra@alumnos.frm.utn.edu.ar>
+Date:   Tue Jun 18 20:32:55 2019 -0300
+
+    solucionando conflictos de Moya
+
+[33mcommit 786c94d7bb560034ec3a553d9004831e9e381def[m
+Merge: f5eeef2 a930a91
+Author: MarceloPereyra <marcelo.pereyra@alumnos.frm.utn.edu.ar>
+Date:   Tue Jun 18 20:31:03 2019 -0300
+
+    solucionando conflicto
+
+[33mcommit a930a910778e3be364f0a6bd64298e05e4519ac7[m[33m ([m[1;31morigin/RenzoOldani-master[m[33m)[m
+Author: “oldanirenzo” <“renzo.oldani@alumnos.frm.utn.edu.ar”>
+Date:   Tue Jun 18 20:24:59 2019 -0300
+
+    Actualizo vistas proyecto
+
+[33mcommit f5eeef23de46f55e42d7d9e1d3c2d2ab2b86eadd[m
+Author: MarceloPereyra <marcelo.pereyra@alumnos.frm.utn.edu.ar>
+Date:   Tue Jun 18 20:24:25 2019 -0300
+
+    actualizacion
+
+[33mcommit 7888116b49659e18204252abfe1eec58790c536c[m
+Author: AgustinMoya <agustin.moya@alumnos.frm.utn.edu.ar>
+Date:   Tue Jun 18 20:24:03 2019 -0300
+
+    actualizo proyecto
+
+[33mcommit 42df22335192feb333b1a5c375a16161b3f8cbc2[m
+Author: MarceloPereyra <marcelo.pereyra@alumnos.frm.utn.edu.ar>
+Date:   Tue Jun 18 19:59:46 2019 -0300
+
+    creando proyecto
+
+[33mcommit 7478d4dc374f0233fad47c7d6616a61b25d2183d[m
+Author: Marcelo3Pereyra <48771068+Marcelo3Pereyra@users.noreply.github.com>
+Date:   Tue Jun 18 19:51:07 2019 -0300
+
+    Initial commit
