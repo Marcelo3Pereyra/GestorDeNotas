@@ -1,5 +1,4 @@
 package controlador;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,12 +11,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Alumno;
 import vista.InterfazAlumno;
-
 public class ControladorAlu extends MouseAdapter implements ActionListener {
-
     private Alumno alumno = new Alumno();
     InterfazAlumno interAlu = new InterfazAlumno();
-
     public ControladorAlu() {
         this.interAlu.setVisible(true);
         llenarTabla();
@@ -27,11 +23,8 @@ public class ControladorAlu extends MouseAdapter implements ActionListener {
         this.interAlu.getBtnModificar().addActionListener(this);
         this.interAlu.getTabla_alum().addMouseListener(this);
     }
-
     public void actionPerformed(ActionEvent ae) {
-
         if (ae.getSource().equals(this.interAlu.getBtnAgregarAlumno())) {
-
             if (interAlu.getTxtDni().getText().length() == 0) {
                 JOptionPane.showMessageDialog(null, "El campo dni esta vacio, por favor ingrese correctamente los datos", "Advertencia", JOptionPane.WARNING_MESSAGE);
             } else {
@@ -60,7 +53,6 @@ public class ControladorAlu extends MouseAdapter implements ActionListener {
         } else if (ae.getSource().equals(this.interAlu.getBtnVolverAlu())) {
             Controlador cont = new Controlador();
             this.interAlu.setVisible(false);
-
         } else if (ae.getSource().equals(this.interAlu.getBtnEliminar())) {
             if (interAlu.getTxtDni().getText().length() == 0) {
                 JOptionPane.showMessageDialog(null, "El campo dni esta vacio, por favor ingrese correctamente los datos", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -96,23 +88,17 @@ public class ControladorAlu extends MouseAdapter implements ActionListener {
             }
             llenarTabla();
         }
-
     }
-
     public void llenarTabla() {
-
         DefaultTableModel tabla = (DefaultTableModel) interAlu.getTabla_alum().getModel();
-
         ArrayList<Alumno> ListadoAlumnos = new ArrayList<>();
         ListadoAlumnos = alumno.listarAlumnos();
         tabla.setNumRows(0);
-
         for (int i = 0; i < ListadoAlumnos.size(); i++) {
             Object row[] = {ListadoAlumnos.get(i).getDni_alu(), ListadoAlumnos.get(i).getNom_alu(), ListadoAlumnos.get(i).getApe_alu(), ListadoAlumnos.get(i).getDomic_alu(), ListadoAlumnos.get(i).getTel_alu()};
             tabla.addRow(row);
         }
     }
-
     @Override
     public void mousePressed(MouseEvent me) {
         if (me.getClickCount() == 1) {
@@ -127,5 +113,4 @@ public class ControladorAlu extends MouseAdapter implements ActionListener {
             }
         }
     }
-
 }

@@ -1,5 +1,4 @@
 package controlador;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,12 +11,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Materia;
 import vista.InterfazMateria;
-
 public class ControladorMat extends MouseAdapter implements ActionListener {
-
     Materia materia = new Materia();
     InterfazMateria interMat = new InterfazMateria();
-
     public ControladorMat() {
         this.interMat.setVisible(true);
         llenarTabla();
@@ -26,9 +22,7 @@ public class ControladorMat extends MouseAdapter implements ActionListener {
         this.interMat.getBtnModificarMat().addActionListener(this);
         this.interMat.getBtnVolverMat().addActionListener(this);
         this.interMat.getTablaMateria().addMouseListener(this);
-
     }
-
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource().equals(interMat.getBtnAgregarMat())) {
@@ -48,7 +42,6 @@ public class ControladorMat extends MouseAdapter implements ActionListener {
                 interMat.getTxtNombreMat().setText("");
                 interMat.getTxtCargaMat().setText("");
                 interMat.getTxtDniProfMat().setText("");
-
             } else {
                 JOptionPane.showMessageDialog(null, "El codigo de la materia no puede estar en blanco.");
             }
@@ -69,7 +62,6 @@ public class ControladorMat extends MouseAdapter implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(null, "El codigo de la materia no puede estar en blanco.");
             }
-
             llenarTabla();
         } else if (ae.getSource().equals(interMat.getBtnModificarMat())) {
             materia.setCod_mat(Integer.parseInt(interMat.getTxtCodigoMat().getText()));
@@ -87,24 +79,20 @@ public class ControladorMat extends MouseAdapter implements ActionListener {
             interMat.dispose();
         }
     }
-
     public void llenarTabla() {
         DefaultTableModel tabla = (DefaultTableModel) interMat.getTablaMateria().getModel();
         ArrayList<Materia> listadoMaterias = new ArrayList<>();
         listadoMaterias = materia.listarMaterias();
         tabla.setNumRows(0);
-
         for (int i = 0; i < listadoMaterias.size(); i++) {
             Object row[] = {listadoMaterias.get(i).getCod_mat(), listadoMaterias.get(i).getDescr_mat(), listadoMaterias.get(i).getCant_hor_mat(), listadoMaterias.get(i).getDni_prof_mat()};
             tabla.addRow(row);
         }
     }
-
     @Override
     public void mousePressed(MouseEvent me) {
         if (me.getClickCount() == 1) {
             int fila = interMat.getTablaMateria().getSelectedRow();
-
             if (fila > -1) {
                 interMat.getTxtCodigoMat().setText(interMat.getTablaMateria().getValueAt(fila, 0).toString());
                 interMat.getTxtNombreMat().setText(interMat.getTablaMateria().getValueAt(fila, 1).toString());
@@ -113,5 +101,4 @@ public class ControladorMat extends MouseAdapter implements ActionListener {
             }
         }
     }
-
 }

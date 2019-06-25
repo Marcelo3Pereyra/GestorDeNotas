@@ -12,7 +12,7 @@ public class ProfesorDAO extends SQLQuery {
     public ProfesorDAO() {
         
         try {
-            this.conectar("localhost", "proyectoMetodologia", "root", "root");
+             conectar("localhost", "proyectoMetodologia", "root", "root");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error de conexion.");
@@ -22,7 +22,7 @@ public class ProfesorDAO extends SQLQuery {
         String insertTableSQL = "INSERT INTO Profesor"
                 + "(dni_prof,nom_prof,ape_prof,domic_prof,tel_prof) VALUES"
                 + "(?,?,?,?,?)";
-        this.consulta = this.conexion.prepareStatement(insertTableSQL);
+        consulta =  conexion.prepareStatement(insertTableSQL);
         consulta.setLong(1, prof.getDni_prof());
         consulta.setString(2, prof.getNom_prof());
         consulta.setString(3, prof.getApe_prof());
@@ -40,16 +40,16 @@ public class ProfesorDAO extends SQLQuery {
         String sql = "SELECT * FROM Profesor";
 
         try {
-            this.consulta = this.conexion.prepareStatement(sql);
+            consulta =  conexion.prepareStatement(sql);
             consulta.execute();
             datos = consulta.executeQuery();
-            while (this.datos.next()) {
+            while ( datos.next()) {
                 prof1 = new Profesor();
-                prof1.setDni_prof(this.datos.getLong("dni_prof"));
-                prof1.setNom_prof(this.datos.getString("nom_prof"));
-                prof1.setApe_prof(this.datos.getString("ape_prof"));
-                prof1.setDomic_prof(this.datos.getString("domic_prof"));
-                prof1.setTel_prof(this.datos.getString("tel_prof"));
+                prof1.setDni_prof( datos.getLong("dni_prof"));
+                prof1.setNom_prof( datos.getString("nom_prof"));
+                prof1.setApe_prof( datos.getString("ape_prof"));
+                prof1.setDomic_prof( datos.getString("domic_prof"));
+                prof1.setTel_prof( datos.getString("tel_prof"));
                 ListadoProfesores.add(prof1);
             }
         } catch (SQLException ex) {
@@ -63,22 +63,20 @@ public class ProfesorDAO extends SQLQuery {
         
         try {
             elimProfesor = conexion.prepareStatement(elimProf);
-            if (elimProfesor.executeUpdate() > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            elimProfesor.executeUpdate();
+             
         } catch (SQLException e1) {
             return false;
         }
-    }
+        return true;
+    }    
     public Profesor modificarProfesorDAO(Profesor prof) {
         int modificado = 0;
 
         if (prof.getNom_prof().length() > 0) {
             try {
-                this.conectar("localhost", "proyectoMetodologia", "root", "root");
-                this.consulta = this.conexion.prepareStatement("UPDATE Profesor SET nom_prof=? WHERE dni_prof=?");
+                 conectar("localhost", "proyectoMetodologia", "root", "root");
+                consulta = conexion.prepareStatement("UPDATE Profesor SET nom_prof=? WHERE dni_prof=?");
                 consulta.setString(1, prof.getNom_prof());
                 consulta.setLong(2, prof.getDni_prof());
                 consulta.executeUpdate();
@@ -94,8 +92,8 @@ public class ProfesorDAO extends SQLQuery {
         
         if (prof.getApe_prof().length() > 0) {
             try {
-                this.conectar("localhost", "proyectoMetodologia", "root", "root");
-                this.consulta = this.conexion.prepareStatement("UPDATE Profesor SET ape_prof=? WHERE dni_prof=?");
+                 conectar("localhost", "proyectoMetodologia", "root", "root");
+                consulta = conexion.prepareStatement("UPDATE Profesor SET ape_prof=? WHERE dni_prof=?");
                 consulta.setString(1, prof.getApe_prof());
                 consulta.setLong(2, prof.getDni_prof());
                 consulta.execute();
@@ -111,8 +109,8 @@ public class ProfesorDAO extends SQLQuery {
         
         if (prof.getDomic_prof().length() > 0) {
             try {
-                this.conectar("localhost", "proyectoMetodologia", "root", "root");
-                this.consulta = this.conexion.prepareStatement("UPDATE Profesor SET domic_prof=? WHERE dni_prof=?");
+                 conectar("localhost", "proyectoMetodologia", "root", "root");
+                consulta = conexion.prepareStatement("UPDATE Profesor SET domic_prof=? WHERE dni_prof=?");
                 consulta.setString(1, prof.getDomic_prof());
                 consulta.setLong(2, prof.getDni_prof());
                 if (consulta.executeUpdate() > 0) {
@@ -127,8 +125,8 @@ public class ProfesorDAO extends SQLQuery {
         
         if (prof.getTel_prof().length() > 0) {
             try {
-                this.conectar("localhost", "proyectoMetodologia", "root", "root");
-                this.consulta = this.conexion.prepareStatement("UPDATE Profesor SET tel_prof=? WHERE dni_prof=?");
+                 conectar("localhost", "proyectoMetodologia", "root", "root");
+                consulta = conexion.prepareStatement("UPDATE Profesor SET tel_prof=? WHERE dni_prof=?");
                 consulta.setString(1, prof.getTel_prof());
                 consulta.setLong(2, prof.getDni_prof());
                 consulta.executeUpdate();
