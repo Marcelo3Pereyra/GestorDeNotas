@@ -12,7 +12,7 @@ public class NotaDAO extends SQLQuery {
     public NotaDAO() {
         
         try {
-             conectar("localhost", "proyectoMetodologia", "root", "root");
+             conectar("127.0.0.1", "proyectoMetodologia", "root", "root");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error de conexion.");
@@ -56,7 +56,7 @@ public class NotaDAO extends SQLQuery {
         
         if (nota.getCodMatNot() > 0 && nota.getDniAluNot() > 0) {
             try {
-                 conectar("localhost", "proyectoMetodologia", "root", "root");
+                 conectar("127.0.0.1", "proyectoMetodologia", "root", "root");
                  consulta =  conexion.prepareStatement("UPDATE Nota SET notas_not=? WHERE dni_alu_not=? AND cod_mat_not=?");
                 consulta.setInt(1, nota.getNotaNot());
                 consulta.setLong(2, nota.getDniAluNot());

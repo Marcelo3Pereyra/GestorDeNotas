@@ -12,13 +12,15 @@ public class ProfesorDAO extends SQLQuery {
     public ProfesorDAO() {
         
         try {
-             conectar("localhost", "proyectoMetodologia", "root", "root");
+             conectar("127.0.0.1", "proyectoMetodologia", "root", "root");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error de conexion.");
         }
     }
     public Boolean agregarProfesorDao(Profesor prof) throws SQLException {
+        
+        if(prof.getDni_prof()<1000000000){
         String insertTableSQL = "INSERT INTO Profesor"
                 + "(dni_prof,nom_prof,ape_prof,domic_prof,tel_prof) VALUES"
                 + "(?,?,?,?,?)";
@@ -28,12 +30,12 @@ public class ProfesorDAO extends SQLQuery {
         consulta.setString(3, prof.getApe_prof());
         consulta.setString(4, prof.getDomic_prof());
         consulta.setString(5, prof.getTel_prof());
-
-        if (consulta.executeUpdate() > 0) {
-            return true;
-        } else {
+        consulta.executeUpdate();
+        }else{
+            JOptionPane.showMessageDialog(null, "El DNI no puede tener mas de nueve digitos, por favor reintente.");
             return false;
         }
+        return true;
     }
     public ArrayList<Profesor> getListadoProfesores() {
         ArrayList<Profesor> ListadoProfesores = new ArrayList<Profesor>();
@@ -75,7 +77,7 @@ public class ProfesorDAO extends SQLQuery {
 
         if (prof.getNom_prof().length() > 0) {
             try {
-                 conectar("localhost", "proyectoMetodologia", "root", "root");
+                 conectar("127.0.0.1", "proyectoMetodologia", "root", "root");
                 consulta = conexion.prepareStatement("UPDATE Profesor SET nom_prof=? WHERE dni_prof=?");
                 consulta.setString(1, prof.getNom_prof());
                 consulta.setLong(2, prof.getDni_prof());
@@ -92,7 +94,7 @@ public class ProfesorDAO extends SQLQuery {
         
         if (prof.getApe_prof().length() > 0) {
             try {
-                 conectar("localhost", "proyectoMetodologia", "root", "root");
+                 conectar("127.0.0.1", "proyectoMetodologia", "root", "root");
                 consulta = conexion.prepareStatement("UPDATE Profesor SET ape_prof=? WHERE dni_prof=?");
                 consulta.setString(1, prof.getApe_prof());
                 consulta.setLong(2, prof.getDni_prof());
@@ -109,7 +111,7 @@ public class ProfesorDAO extends SQLQuery {
         
         if (prof.getDomic_prof().length() > 0) {
             try {
-                 conectar("localhost", "proyectoMetodologia", "root", "root");
+                 conectar("127.0.0.1", "proyectoMetodologia", "root", "root");
                 consulta = conexion.prepareStatement("UPDATE Profesor SET domic_prof=? WHERE dni_prof=?");
                 consulta.setString(1, prof.getDomic_prof());
                 consulta.setLong(2, prof.getDni_prof());
@@ -125,7 +127,7 @@ public class ProfesorDAO extends SQLQuery {
         
         if (prof.getTel_prof().length() > 0) {
             try {
-                 conectar("localhost", "proyectoMetodologia", "root", "root");
+                 conectar("127.0.0.1", "proyectoMetodologia", "root", "root");
                 consulta = conexion.prepareStatement("UPDATE Profesor SET tel_prof=? WHERE dni_prof=?");
                 consulta.setString(1, prof.getTel_prof());
                 consulta.setLong(2, prof.getDni_prof());
