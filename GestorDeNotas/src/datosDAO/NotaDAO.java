@@ -12,7 +12,7 @@ public class NotaDAO extends SQLQuery {
     public NotaDAO() {
         
         try {
-            this.conectar("localhost", "proyectoMetodologia", "root", "root");
+             conectar("localhost", "proyectoMetodologia", "root", "root");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error de conexion.");
@@ -23,7 +23,7 @@ public class NotaDAO extends SQLQuery {
         String agregar = "INSERT INTO Nota"
                 + "(dni_alu_not, cod_mat_not, notas_not) VALUES"
                 + "(?,?,?)";
-        this.consulta = this.conexion.prepareStatement(agregar);
+         consulta =  conexion.prepareStatement(agregar);
         consulta.setLong(1, nota.getDniAluNot());
         consulta.setInt(2, nota.getCodMatNot());
         consulta.setInt(3, nota.getNotaNot());
@@ -56,8 +56,8 @@ public class NotaDAO extends SQLQuery {
         
         if (nota.getCodMatNot() > 0 && nota.getDniAluNot() > 0) {
             try {
-                this.conectar("localhost", "proyectoMetodologia", "root", "root");
-                this.consulta = this.conexion.prepareStatement("UPDATE Nota SET notas_not=? WHERE dni_alu_not=? AND cod_mat_not=?");
+                 conectar("localhost", "proyectoMetodologia", "root", "root");
+                 consulta =  conexion.prepareStatement("UPDATE Nota SET notas_not=? WHERE dni_alu_not=? AND cod_mat_not=?");
                 consulta.setInt(1, nota.getNotaNot());
                 consulta.setLong(2, nota.getDniAluNot());
                 consulta.setInt(3, nota.getCodMatNot());
@@ -86,14 +86,14 @@ public class NotaDAO extends SQLQuery {
         String sql = "SELECT * FROM Nota";
         
         try {
-            this.consulta = this.conexion.prepareStatement(sql);
+             consulta =  conexion.prepareStatement(sql);
             consulta.execute();
             datos = consulta.executeQuery();
-            while (this.datos.next()) {
+            while ( datos.next()) {
                nota = new Nota();
-               nota.setCodMatNot(this.datos.getInt("cod_mat_not"));
-               nota.setDniAluNot(this.datos.getLong("dni_alu_not"));
-               nota.setNotaNot(this.datos.getInt("notas_not"));
+               nota.setCodMatNot( datos.getInt("cod_mat_not"));
+               nota.setDniAluNot( datos.getLong("dni_alu_not"));
+               nota.setNotaNot( datos.getInt("notas_not"));
                 ListadoNotas.add(nota);
             }
         } catch (SQLException ex) {
